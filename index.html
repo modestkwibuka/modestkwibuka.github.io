@@ -46,7 +46,27 @@ body{background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;}@m
 #scroll-progress{position:fixed;top:0;left:0;height:3px;background:var(--lime);z-index:9999;width:0%;transition:width 0.1s;}
 
 /* NAV */
-nav{position:fixed;top:0;width:100%;z-index:1000;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;background:rgba(34,32,34,0.95);backdrop-filter:blur(10px);border-bottom:1px solid rgba(195,216,9,0.1);}
+nav{
+  position:fixed;
+  top:0;
+  width:100%;
+  z-index:1000;
+  padding:1rem 2rem;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:rgba(34,32,34,0.7);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(195,216,9,0.15);
+  box-shadow:0 8px 32px rgba(0,0,0,0.3);
+  animation:navFloat 6s ease-in-out infinite;
+}
+
+@keyframes navFloat{
+  0%,100%{transform:translateY(0px);}
+  50%{transform:translateY(-2px);}
+}
 .nav-logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.3rem;color:var(--lime);letter-spacing:1px;}
 .nav-links{display:flex;gap:1.5rem;list-style:none;align-items:center;}
 .nav-links a{color:var(--text);text-decoration:none;font-size:0.85rem;font-weight:500;transition:color 0.3s;}
@@ -341,6 +361,57 @@ footer p{color:var(--muted);font-size:0.85rem;}
   }
 }
 
+
+/* PARALLAX & 3D SCROLLING */
+html{scroll-behavior:auto!important;}
+body{overflow-x:hidden;}
+
+.parallax-element{will-change:transform;}
+.parallax-slow{transform:translateY(var(--parallax-offset, 0px));}
+.parallax-medium{transform:translateY(calc(var(--parallax-offset, 0px) * 0.5));}
+.parallax-fast{transform:translateY(calc(var(--parallax-offset, 0px) * 0.3));}
+
+/* FLOATING ELEMENTS */
+.floating{animation:float 6s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0px);}50%{transform:translateY(-20px);}}
+
+.floating-slow{animation:float 8s ease-in-out infinite;}
+.floating-fast{animation:float 4s ease-in-out infinite;}
+
+/* DEPTH LAYERS */
+.depth-layer-1{z-index:1;transform:translateZ(100px);}
+.depth-layer-2{z-index:2;transform:translateZ(200px);}
+.depth-layer-3{z-index:3;transform:translateZ(300px);}
+
+/* ENHANCED GLASSMORPHISM */
+.glass-deep{
+  background:rgba(255,255,255,0.05)!important;
+  backdrop-filter:blur(30px)!important;
+  -webkit-backdrop-filter:blur(30px)!important;
+  border:1px solid rgba(255,255,255,0.1)!important;
+  box-shadow:0 8px 32px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.1)!important;
+}
+
+/* SECTION SCROLL ANIMATIONS */
+section{opacity:var(--section-opacity, 1);transform:translateY(var(--section-offset, 0px));}
+
+/* ENHANCED HERO DEPTH */
+.hero{perspective:1200px;}
+.hero-content{transform-style:preserve-3d;transform:translateZ(50px);}
+.hero-image{transform-style:preserve-3d;transform:translateZ(100px);}
+
+/* CARD DEPTH */
+.service-card{transform-style:preserve-3d;transition:all 0.4s cubic-bezier(0.23,1,0.32,1);}
+.service-card:hover{transform:perspective(1200px) rotateX(8deg) rotateY(-8deg) translateZ(50px) scale(1.03);}
+
+/* GALLERY DEPTH */
+.gallery-item{transform-style:preserve-3d;transition:all 0.5s cubic-bezier(0.23,1,0.32,1);}
+.gallery-item:hover{transform:perspective(1200px) rotateX(10deg) rotateY(-10deg) translateZ(60px) scale(1.08);}
+
+/* SCROLL INDICATOR */
+.scroll-indicator{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);z-index:100;animation:bounce 2s infinite;}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(-10px);}}
+
 /* ANIMATIONS */
 .fade-up{opacity:0;transform:translateY(30px);transition:all 0.6s ease;}
 .fade-up.visible{opacity:1;transform:translateY(0);}
@@ -375,8 +446,10 @@ footer p{color:var(--muted);font-size:0.85rem;}
   .hero-text h1{font-size:2rem;}
 }
 </style>
+<script src="https://cdn.jsdelivr.net/gh/darkroomengineering/lenis@latest"></script>
 </head>
-<body>
+<body><div class="scroll-indicator" style="opacity:0.5;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--lime)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="12 19 19 12 12 5"></polyline></svg></div>
+  
 
 <div id="scroll-progress"></div>
 <div class="cursor-dot" id="cursorDot"></div>
@@ -415,7 +488,7 @@ footer p{color:var(--muted);font-size:0.85rem;}
 </div>
 
 <!-- HERO -->
-<section class="hero" id="home">
+<section class="hero" id="home" data-parallax="0.5">
   <video class="hero-bg-video" autoplay muted loop playsinline>
     <source src="reel.mp4" type="video/mp4">
   </video>
@@ -463,7 +536,7 @@ footer p{color:var(--muted);font-size:0.85rem;}
 </div>
 
 <!-- GALLERY -->
-<section id="gallery" class="gallery-section">
+<section id="gallery" class="gallery-section" data-parallax="0.4">
   <div class="container">
     <div class="section-header fade-up">
       <div class="section-tag">Portfolio</div>
@@ -502,7 +575,7 @@ footer p{color:var(--muted);font-size:0.85rem;}
 </div>
 
 <!-- SERVICES -->
-<section id="services">
+<section id="services" data-parallax="0.3">
   <div class="container">
     <div class="section-header fade-up">
       <div class="section-tag">What I Offer</div>
@@ -985,6 +1058,177 @@ if (document.readyState === 'loading') {
 } else {
   renderGallery();
 }
+
+
+// ============================================================
+// LENIS SMOOTH SCROLL SETUP
+// ============================================================
+const lenis = new Lenis({
+  duration: 1.2,
+  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+  direction: 'vertical',
+  gestureDirection: 'vertical',
+  smooth: true,
+  smoothTouch: false,
+  touchMultiplier: 2,
+});
+
+function raf(time) {
+  lenis.raf(time);
+  requestAnimationFrame(raf);
+}
+requestAnimationFrame(raf);
+
+// ============================================================
+// PARALLAX SCROLL ENGINE
+// ============================================================
+const parallaxElements = document.querySelectorAll('[data-parallax]');
+window.addEventListener('scroll', () => {
+  parallaxElements.forEach(el => {
+    const speed = el.dataset.parallax || 0.5;
+    const yPos = window.scrollY * speed;
+    el.style.setProperty('--parallax-offset', yPos + 'px');
+  });
+});
+
+// ============================================================
+// MAGNETIC CURSOR INTERACTION
+// ============================================================
+class MagneticCursor {
+  constructor() {
+    this.x = 0;
+    this.y = 0;
+    this.targetX = 0;
+    this.targetY = 0;
+    this.speed = 0.15;
+    this.magneticElements = document.querySelectorAll('button, a, .service-card, .gallery-item');
+    this.init();
+  }
+
+  init() {
+    document.addEventListener('mousemove', (e) => {
+      this.targetX = e.clientX;
+      this.targetY = e.clientY;
+      this.updateCursor();
+      this.checkMagnetic(e);
+    });
+
+    this.animate();
+  }
+
+  updateCursor() {
+    this.x += (this.targetX - this.x) * this.speed;
+    this.y += (this.targetY - this.y) * this.speed;
+    
+    const dot = document.getElementById('cursorDot');
+    const ring = document.getElementById('cursorRing');
+    
+    if (dot) {
+      dot.style.left = this.x + 'px';
+      dot.style.top = this.y + 'px';
+    }
+    if (ring) {
+      ring.style.left = this.x + 'px';
+      ring.style.top = this.y + 'px';
+    }
+  }
+
+  checkMagnetic(e) {
+    this.magneticElements.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const distance = Math.hypot(e.clientX - centerX, e.clientY - centerY);
+      const magneticRange = 100;
+
+      if (distance < magneticRange) {
+        const angle = Math.atan2(e.clientY - centerY, e.clientX - centerX);
+        const pullX = Math.cos(angle) * (magneticRange - distance) * 0.3;
+        const pullY = Math.sin(angle) * (magneticRange - distance) * 0.3;
+        
+        el.style.transform = `translate(${-pullX}px, ${-pullY}px)`;
+        
+        const ring = document.getElementById('cursorRing');
+        if (ring) {
+          ring.classList.add('hovered');
+          ring.style.width = '60px';
+          ring.style.height = '60px';
+        }
+      } else {
+        el.style.transform = 'translate(0, 0)';
+        const ring = document.getElementById('cursorRing');
+        if (ring) {
+          ring.classList.remove('hovered');
+          ring.style.width = '36px';
+          ring.style.height = '36px';
+        }
+      }
+    });
+  }
+
+  animate() {
+    requestAnimationFrame(() => this.animate());
+  }
+}
+
+// Initialize magnetic cursor
+if (window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
+  new MagneticCursor();
+}
+
+// ============================================================
+// SCROLL-BASED SECTION ANIMATIONS
+// ============================================================
+const observerOptions = {
+  threshold: 0.3,
+  rootMargin: '0px 0px -100px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.setProperty('--section-opacity', '1');
+      entry.target.style.setProperty('--section-offset', '0px');
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll('section').forEach(section => {
+  section.style.setProperty('--section-opacity', '0.5');
+  section.style.setProperty('--section-offset', '50px');
+  observer.observe(section);
+});
+
+// ============================================================
+// FLOATING ANIMATION FOR HERO ELEMENTS
+// ============================================================
+function initFloatingElements() {
+  const floatingElements = document.querySelectorAll('.hero-content, .hero-image');
+  floatingElements.forEach((el, index) => {
+    el.classList.add('floating');
+    if (index === 0) el.classList.add('floating-slow');
+    if (index === 1) el.classList.add('floating-fast');
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initFloatingElements);
+} else {
+  initFloatingElements();
+}
+
+// ============================================================
+// SCROLL PROGRESS WITH PARALLAX
+// ============================================================
+window.addEventListener('scroll', () => {
+  const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const scrolled = (window.scrollY / scrollHeight) * 100;
+  const progressBar = document.getElementById('scroll-progress');
+  if (progressBar) {
+    progressBar.style.width = scrolled + '%';
+  }
+});
+
 
 // CURSOR
 const dot = document.getElementById('cursorDot');
