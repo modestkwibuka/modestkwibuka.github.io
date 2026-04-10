@@ -448,10 +448,9 @@ section{opacity:var(--section-opacity, 1);transform:translateY(var(--section-off
 </style>
 <script src="https://cdn.jsdelivr.net/gh/darkroomengineering/lenis@latest"></script>
 </head>
-<body><div class="scroll-indicator" style="opacity:0.5;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--lime)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="12 19 19 12 12 5"></polyline></svg></div>
-  
-
+<body>
 <div id="scroll-progress"></div>
+<div class="scroll-indicator" style="opacity:0.5;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--lime)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="12 19 19 12 12 5"></polyline></svg></div>
 <div class="cursor-dot" id="cursorDot"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
@@ -1053,47 +1052,65 @@ document.addEventListener('keydown', function(e) {
 });
 
 // Initialize gallery on load
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', renderGallery);
-} else {
-  renderGallery();
+try {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof renderGallery === 'function') renderGallery();
+    });
+  } else {
+    if (typeof renderGallery === 'function') renderGallery();
+  }
+} catch (e) {
+  console.warn('Gallery initialization failed:', e);
 }
 
 
 // ============================================================
 // LENIS SMOOTH SCROLL SETUP
 // ============================================================
-const lenis = new Lenis({
-  duration: 1.2,
-  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-  direction: 'vertical',
-  gestureDirection: 'vertical',
-  smooth: true,
-  smoothTouch: false,
-  touchMultiplier: 2,
-});
+let lenis = null;
+try {
+  if (typeof Lenis !== 'undefined') {
+    lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      direction: 'vertical',
+      gestureDirection: 'vertical',
+      smooth: true,
+      smoothTouch: false,
+      touchMultiplier: 2,
+    });
 
-function raf(time) {
-  lenis.raf(time);
-  requestAnimationFrame(raf);
+    function raf(time) {
+      if (lenis) lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+  }
+} catch (e) {
+  console.warn('Lenis failed to load:', e);
 }
-requestAnimationFrame(raf);
 
 // ============================================================
 // PARALLAX SCROLL ENGINE
 // ============================================================
-const parallaxElements = document.querySelectorAll('[data-parallax]');
-window.addEventListener('scroll', () => {
-  parallaxElements.forEach(el => {
-    const speed = el.dataset.parallax || 0.5;
-    const yPos = window.scrollY * speed;
-    el.style.setProperty('--parallax-offset', yPos + 'px');
+try {
+  const parallaxElements = document.querySelectorAll('[data-parallax]');
+  window.addEventListener('scroll', () => {
+    parallaxElements.forEach(el => {
+      const speed = el.dataset.parallax || 0.5;
+      const yPos = window.scrollY * speed;
+      el.style.setProperty('--parallax-offset', yPos + 'px');
+    });
   });
-});
+} catch (e) {
+  console.warn('Parallax failed:', e);
+}
 
 // ============================================================
 // MAGNETIC CURSOR INTERACTION
 // ============================================================
+try {
 class MagneticCursor {
   constructor() {
     this.x = 0;
@@ -1175,6 +1192,9 @@ class MagneticCursor {
 if (window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
   new MagneticCursor();
 }
+} catch (e) {
+  console.warn('Magnetic cursor failed:', e);
+}
 
 // ============================================================
 // SCROLL-BASED SECTION ANIMATIONS
@@ -1202,32 +1222,40 @@ document.querySelectorAll('section').forEach(section => {
 // ============================================================
 // FLOATING ANIMATION FOR HERO ELEMENTS
 // ============================================================
-function initFloatingElements() {
-  const floatingElements = document.querySelectorAll('.hero-content, .hero-image');
-  floatingElements.forEach((el, index) => {
-    el.classList.add('floating');
-    if (index === 0) el.classList.add('floating-slow');
-    if (index === 1) el.classList.add('floating-fast');
-  });
-}
+try {
+  function initFloatingElements() {
+    const floatingElements = document.querySelectorAll('.hero-content, .hero-image');
+    floatingElements.forEach((el, index) => {
+      el.classList.add('floating');
+      if (index === 0) el.classList.add('floating-slow');
+      if (index === 1) el.classList.add('floating-fast');
+    });
+  }
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initFloatingElements);
-} else {
-  initFloatingElements();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFloatingElements);
+  } else {
+    initFloatingElements();
+  }
+} catch (e) {
+  console.warn('Floating elements failed:', e);
 }
 
 // ============================================================
 // SCROLL PROGRESS WITH PARALLAX
 // ============================================================
-window.addEventListener('scroll', () => {
-  const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-  const scrolled = (window.scrollY / scrollHeight) * 100;
-  const progressBar = document.getElementById('scroll-progress');
-  if (progressBar) {
-    progressBar.style.width = scrolled + '%';
-  }
-});
+try {
+  window.addEventListener('scroll', () => {
+    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrolled = (window.scrollY / scrollHeight) * 100;
+    const progressBar = document.getElementById('scroll-progress');
+    if (progressBar) {
+      progressBar.style.width = scrolled + '%';
+    }
+  });
+} catch (e) {
+  console.warn('Scroll progress failed:', e);
+}
 
 
 // CURSOR
