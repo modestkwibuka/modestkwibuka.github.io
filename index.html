@@ -331,7 +331,7 @@ footer p{color:var(--muted);font-size:0.85rem;}
 .profile-photo.tilted{transition:transform 0.1s ease-out;}
 
 /* GALLERY GRID */
-.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;grid-auto-rows:280px;width:100%;}
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;grid-auto-rows:280px;width:100%;position:relative;z-index:10;}
 .gallery-item{position:relative;border-radius:15px;overflow:hidden;cursor:pointer;background:linear-gradient(135deg,rgba(195,216,9,0.1),rgba(195,216,9,0.05));border:1px solid rgba(195,216,9,0.3);transition:all 0.4s cubic-bezier(0.23,1,0.320,1);transform-style:preserve-3d;perspective:1000px;box-shadow:0 4px 15px rgba(0,0,0,0.3);}
 .gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease;filter:brightness(0.8);}
 .gallery-item:hover{transform:translateY(-8px) rotateX(2deg) rotateZ(0deg) scale(1.02);box-shadow:0 12px 28px rgba(195,216,9,0.15);border-color:rgba(195,216,9,0.6);}
@@ -394,7 +394,7 @@ body{overflow-x:hidden;}
 }
 
 /* SECTION SCROLL ANIMATIONS */
-section{opacity:var(--section-opacity, 1);transform:translateY(var(--section-offset, 0px));transition:all 0.8s ease-out;}
+section{opacity:var(--section-opacity, 1);transform:translateY(var(--section-offset, 0px));transition:all 0.8s ease-out;position:relative;z-index:5;}
 
 /* ENHANCED HERO DEPTH */
 .hero{perspective:1200px;}
@@ -412,6 +412,75 @@ section{opacity:var(--section-opacity, 1);transform:translateY(var(--section-off
 /* SCROLL INDICATOR */
 .scroll-indicator{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);z-index:100;animation:bounce 2s infinite;}
 @keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(-10px);}}
+
+
+/* 3D FLOATING MATERIALS */
+.floating-materials{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  overflow:hidden;
+}
+
+.material{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(60px);
+  opacity:0.15;
+  mix-blend-mode:screen;
+  will-change:transform;
+}
+
+.material-1{
+  width:300px;
+  height:300px;
+  background:radial-gradient(circle at 30% 30%, rgba(195,216,9,0.8), rgba(195,216,9,0));
+  top:10%;
+  left:5%;
+  animation:float-material 20s ease-in-out infinite;
+}
+
+.material-2{
+  width:400px;
+  height:400px;
+  background:radial-gradient(circle at 40% 40%, rgba(195,216,9,0.6), rgba(195,216,9,0));
+  top:50%;
+  right:10%;
+  animation:float-material 25s ease-in-out infinite reverse;
+}
+
+.material-3{
+  width:250px;
+  height:250px;
+  background:radial-gradient(circle at 35% 35%, rgba(195,216,9,0.7), rgba(195,216,9,0));
+  bottom:15%;
+  left:15%;
+  animation:float-material 22s ease-in-out infinite;
+}
+
+.material-4{
+  width:350px;
+  height:350px;
+  background:radial-gradient(circle at 45% 45%, rgba(195,216,9,0.5), rgba(195,216,9,0));
+  top:30%;
+  right:5%;
+  animation:float-material 28s ease-in-out infinite reverse;
+}
+
+@keyframes float-material{
+  0%{transform:translate(0, 0) scale(1);}
+  25%{transform:translate(30px, -40px) scale(1.05);}
+  50%{transform:translate(-20px, 50px) scale(0.95);}
+  75%{transform:translate(40px, 20px) scale(1.02);}
+  100%{transform:translate(0, 0) scale(1);}
+}
+
+@media(hover:hover) and (pointer:fine){
+  .material{
+    animation:none;
+  }
+}
 
 /* ANIMATIONS */
 .fade-up{opacity:0;transform:translateY(30px);transition:all 0.6s ease;}
@@ -450,6 +519,14 @@ section{opacity:var(--section-opacity, 1);transform:translateY(var(--section-off
 <script src="https://cdn.jsdelivr.net/gh/darkroomengineering/lenis@latest"></script>
 </head>
 <body>
+
+<!-- 3D FLOATING MATERIALS -->
+<div class="floating-materials">
+  <div class="material material-1"></div>
+  <div class="material material-2"></div>
+  <div class="material material-3"></div>
+  <div class="material material-4"></div>
+</div>
 <div id="scroll-progress"></div>
 <div class="scroll-indicator" style="opacity:0.5;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--lime)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="12 19 19 12 12 5"></polyline></svg></div>
 <div class="cursor-dot" id="cursorDot"></div>
@@ -1001,13 +1078,13 @@ if (profileTilt) {
 // PROFESSIONAL GALLERY
 const galleryItems = [
   {id:1, category:'content', title:'Brand Campaign', img:'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=400&fit=crop'},
-  {id:2, category:'wedding', title:'Wedding Day', img:'https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=400&fit=crop'},
+  {id:2, category:'wedding', title:'Wedding Moments', img:'https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=400&fit=crop'},
   {id:3, category:'content', title:'Social Content', img:'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400&h=400&fit=crop'},
   {id:4, category:'events', title:'Event Coverage', img:'https://images.unsplash.com/photo-1540575467063-178f50002cbc?w=400&h=400&fit=crop'},
-  {id:5, category:'wedding', title:'Reception', img:'https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=400&h=400&fit=crop'},
-  {id:6, category:'content', title:'Product Shoot', img:'https://images.unsplash.com/photo-1552668288-648666c8ae08?w=400&h=400&fit=crop'},
-  {id:7, category:'events', title:'Conference', img:'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=400&fit=crop'},
-  {id:8, category:'wedding', title:'Ceremony', img:'https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=400&fit=crop'},
+  {id:5, category:'wedding', title:'Reception Vibes', img:'https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=400&h=400&fit=crop'},
+  {id:6, category:'content', title:'Product Photography', img:'https://images.unsplash.com/photo-1552668288-648666c8ae08?w=400&h=400&fit=crop'},
+  {id:7, category:'events', title:'Live Event', img:'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=400&fit=crop'},
+  {id:8, category:'wedding', title:'Ceremony Moments', img:'https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=400&fit=crop'},
 ];
 
 function renderGallery(filter='all') {
@@ -1258,6 +1335,40 @@ try {
   console.warn('Scroll progress failed:', e);
 }
 
+
+
+// ============================================================
+// 3D FLOATING MATERIALS - MOUSE FOLLOW
+// ============================================================
+try {
+  const materials = document.querySelectorAll('.material');
+  let mouseX = 0;
+  let mouseY = 0;
+  
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX / window.innerWidth;
+    mouseY = e.clientY / window.innerHeight;
+    
+    materials.forEach((material, index) => {
+      const depth = (index + 1) * 0.1;
+      const moveX = (mouseX - 0.5) * 100 * depth;
+      const moveY = (mouseY - 0.5) * 100 * depth;
+      
+      material.style.transform = `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px))`;
+    });
+  });
+  
+  // Parallax effect on scroll
+  window.addEventListener('scroll', () => {
+    materials.forEach((material, index) => {
+      const depth = (index + 1) * 0.05;
+      const moveY = window.scrollY * depth;
+      material.style.transform = `translateY(${moveY}px)`;
+    });
+  }, { passive: true });
+} catch (e) {
+  console.warn('3D materials failed:', e);
+}
 
 // CURSOR
 const dot = document.getElementById('cursorDot');
