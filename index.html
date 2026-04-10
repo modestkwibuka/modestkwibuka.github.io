@@ -414,67 +414,216 @@ section{opacity:var(--section-opacity, 1);transform:translateY(var(--section-off
 @keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(-10px);}}
 
 
-/* 3D FLOATING MATERIALS */
+/* NOOMO-STYLE 3D FLOATING MATERIALS */
 .floating-materials{
   position:fixed;
   inset:0;
   z-index:0;
   pointer-events:none;
   overflow:hidden;
+  perspective:1200px;
 }
 
 .material{
   position:absolute;
-  width:120px;
-  height:120px;
+  width:180px;
+  height:180px;
   display:flex;
   align-items:center;
   justify-content:center;
-  opacity:0.25;
-  filter:drop-shadow(0 0 30px rgba(195,216,9,0.3));
+  opacity:0.35;
   will-change:transform;
+  filter:drop-shadow(0 20px 40px rgba(0,0,0,0.2));
 }
 
-.floating-icon svg{
+.noomo-object{
+  perspective:1000px;
+}
+
+.object-3d{
   width:100%;
   height:100%;
-  filter:drop-shadow(0 0 15px rgba(195,216,9,0.2));
+  position:relative;
+  transform-style:preserve-3d;
+  animation:float-material 20s ease-in-out infinite;
 }
 
+/* CAMERA 3D */
+.camera-3d .lens-front{
+  position:absolute;
+  width:80px;
+  height:80px;
+  background:radial-gradient(circle at 35% 35%, rgba(195,216,9,0.9), rgba(100,120,0,0.6));
+  border-radius:50%;
+  top:20px;
+  left:50%;
+  transform:translateX(-50%);
+  box-shadow:inset -10px -10px 20px rgba(0,0,0,0.4), 0 10px 30px rgba(195,216,9,0.5);
+}
+
+.camera-3d .camera-body{
+  position:absolute;
+  width:120px;
+  height:100px;
+  background:linear-gradient(135deg, rgba(200,200,200,0.8), rgba(100,100,100,0.9));
+  border-radius:10px;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  box-shadow:inset -5px -5px 15px rgba(0,0,0,0.3), 0 15px 35px rgba(0,0,0,0.3);
+}
+
+/* RING LIGHT 3D */
+.ringlight-3d .ring-outer{
+  position:absolute;
+  width:160px;
+  height:160px;
+  border:8px solid;
+  border-color:rgba(195,216,9,0.7);
+  border-radius:50%;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  box-shadow:0 0 30px rgba(195,216,9,0.6), inset 0 0 20px rgba(195,216,9,0.2);
+}
+
+.ringlight-3d .ring-middle{
+  position:absolute;
+  width:120px;
+  height:120px;
+  border:4px solid rgba(195,216,9,0.4);
+  border-radius:50%;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+}
+
+.ringlight-3d .ring-inner{
+  position:absolute;
+  width:60px;
+  height:60px;
+  background:radial-gradient(circle, rgba(195,216,9,0.8), rgba(100,120,0,0.4));
+  border-radius:50%;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  box-shadow:0 0 40px rgba(195,216,9,0.7);
+}
+
+.ringlight-3d .ring-glow{
+  position:absolute;
+  width:180px;
+  height:180px;
+  background:radial-gradient(circle, rgba(195,216,9,0.3), transparent);
+  border-radius:50%;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  filter:blur(20px);
+}
+
+/* MICROPHONE 3D */
+.microphone-3d .mic-head{
+  position:absolute;
+  width:70px;
+  height:90px;
+  background:linear-gradient(135deg, rgba(220,220,220,0.9), rgba(150,150,150,0.8));
+  border-radius:50% 50% 40% 40%;
+  top:0;
+  left:50%;
+  transform:translateX(-50%);
+  box-shadow:inset -8px -8px 15px rgba(0,0,0,0.3), 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.microphone-3d .mic-body{
+  position:absolute;
+  width:40px;
+  height:60px;
+  background:linear-gradient(90deg, rgba(180,180,180,0.8), rgba(120,120,120,0.9));
+  top:70px;
+  left:50%;
+  transform:translateX(-50%);
+  box-shadow:inset -4px 0 10px rgba(0,0,0,0.3);
+}
+
+.microphone-3d .mic-stand{
+  position:absolute;
+  width:8px;
+  height:40px;
+  background:linear-gradient(90deg, rgba(150,150,150,0.8), rgba(100,100,100,0.9));
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* LENS 3D */
+.lens-3d .lens-glass{
+  position:absolute;
+  width:140px;
+  height:140px;
+  background:conic-gradient(from 0deg, rgba(195,216,9,0.6), rgba(255,100,200,0.5), rgba(100,200,255,0.5), rgba(195,216,9,0.6));
+  border-radius:50%;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  box-shadow:inset -15px -15px 30px rgba(0,0,0,0.2), 0 20px 40px rgba(195,216,9,0.4);
+}
+
+.lens-3d .lens-frame{
+  position:absolute;
+  width:150px;
+  height:150px;
+  border:3px solid rgba(200,200,200,0.6);
+  border-radius:50%;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  box-shadow:0 0 25px rgba(195,216,9,0.3);
+}
+
+.lens-3d .lens-shine{
+  position:absolute;
+  width:60px;
+  height:60px;
+  background:radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8), transparent);
+  border-radius:50%;
+  top:30%;
+  left:25%;
+  filter:blur(10px);
+}
+
+/* POSITIONS */
 .material-1{
   top:10%;
   left:5%;
-  animation:float-material 20s ease-in-out infinite;
 }
 
 .material-2{
   top:50%;
   right:10%;
-  animation:float-material 25s ease-in-out infinite reverse;
 }
 
 .material-3{
   bottom:15%;
   left:15%;
-  animation:float-material 22s ease-in-out infinite;
 }
 
 .material-4{
   top:30%;
   right:5%;
-  animation:float-material 28s ease-in-out infinite reverse;
 }
 
 @keyframes float-material{
-  0%{transform:translate(0, 0) scale(1) rotateZ(0deg);}
-  25%{transform:translate(30px, -40px) scale(1.08) rotateZ(15deg);}
-  50%{transform:translate(-20px, 50px) scale(0.95) rotateZ(-10deg);}
-  75%{transform:translate(40px, 20px) scale(1.05) rotateZ(8deg);}
-  100%{transform:translate(0, 0) scale(1) rotateZ(0deg);}
+  0%{transform:translate(0, 0) rotateX(0deg) rotateY(0deg) rotateZ(0deg);}
+  25%{transform:translate(20px, -30px) rotateX(15deg) rotateY(-15deg) rotateZ(10deg);}
+  50%{transform:translate(-15px, 40px) rotateX(-10deg) rotateY(20deg) rotateZ(-5deg);}
+  75%{transform:translate(30px, 15px) rotateX(8deg) rotateY(-10deg) rotateZ(15deg);}
+  100%{transform:translate(0, 0) rotateX(0deg) rotateY(0deg) rotateZ(0deg);}
 }
 
 @media(hover:hover) and (pointer:fine){
-  .material{
+  .object-3d{
     animation:none;
   }
 }
@@ -519,44 +668,42 @@ section{opacity:var(--section-opacity, 1);transform:translateY(var(--section-off
 
 <!-- 3D FLOATING MATERIALS -->
 <div class="floating-materials">
-  <!-- Camera Icon -->
-  <div class="material material-1 floating-icon">
-    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(195,216,9,0.6)" stroke-width="2"/>
-      <circle cx="50" cy="50" r="25" fill="none" stroke="rgba(195,216,9,0.5)" stroke-width="1.5"/>
-      <circle cx="50" cy="50" r="15" fill="rgba(195,216,9,0.3)"/>
-      <rect x="15" y="35" width="70" height="30" rx="5" fill="none" stroke="rgba(195,216,9,0.4)" stroke-width="2"/>
-    </svg>
+  <!-- 3D Glossy Camera - Purple/Magenta -->
+  <div class="material material-1 noomo-object">
+    <div class="object-3d camera-3d">
+      <div class="object-body">
+        <div class="lens-front"></div>
+        <div class="camera-body"></div>
+      </div>
+    </div>
   </div>
   
-  <!-- Ring Light Icon -->
-  <div class="material material-2 floating-icon">
-    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(195,216,9,0.5)" stroke-width="3"/>
-      <circle cx="50" cy="50" r="35" fill="none" stroke="rgba(195,216,9,0.3)" stroke-width="2"/>
-      <circle cx="50" cy="50" r="8" fill="rgba(195,216,9,0.6)"/>
-    </svg>
+  <!-- 3D Neon Ring Light - Cyan/Magenta -->
+  <div class="material material-2 noomo-object">
+    <div class="object-3d ringlight-3d">
+      <div class="ring-outer"></div>
+      <div class="ring-middle"></div>
+      <div class="ring-inner"></div>
+      <div class="ring-glow"></div>
+    </div>
   </div>
   
-  <!-- Microphone Icon -->
-  <div class="material material-3 floating-icon">
-    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-      <path d="M 50 20 Q 65 20 65 35 L 65 55 Q 65 70 50 70 Q 35 70 35 55 L 35 35 Q 35 20 50 20" fill="none" stroke="rgba(195,216,9,0.6)" stroke-width="2.5"/>
-      <line x1="50" y1="70" x2="50" y2="85" stroke="rgba(195,216,9,0.5)" stroke-width="2"/>
-      <path d="M 30 80 Q 50 90 70 80" fill="none" stroke="rgba(195,216,9,0.4)" stroke-width="2"/>
-    </svg>
+  <!-- 3D Metallic Microphone - Silver/Chrome -->
+  <div class="material material-3 noomo-object">
+    <div class="object-3d microphone-3d">
+      <div class="mic-head"></div>
+      <div class="mic-body"></div>
+      <div class="mic-stand"></div>
+    </div>
   </div>
   
-  <!-- Film Reel Icon -->
-  <div class="material material-4 floating-icon">
-    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(195,216,9,0.5)" stroke-width="2"/>
-      <circle cx="50" cy="50" r="30" fill="none" stroke="rgba(195,216,9,0.4)" stroke-width="1.5"/>
-      <circle cx="50" cy="50" r="15" fill="none" stroke="rgba(195,216,9,0.3)" stroke-width="1"/>
-      <circle cx="50" cy="50" r="5" fill="rgba(195,216,9,0.5)"/>
-      <line x1="50" y1="20" x2="50" y2="35" stroke="rgba(195,216,9,0.3)" stroke-width="1"/>
-      <line x1="50" y1="65" x2="50" y2="80" stroke="rgba(195,216,9,0.3)" stroke-width="1"/>
-    </svg>
+  <!-- 3D Holographic Lens - Iridescent -->
+  <div class="material material-4 noomo-object">
+    <div class="object-3d lens-3d">
+      <div class="lens-glass"></div>
+      <div class="lens-frame"></div>
+      <div class="lens-shine"></div>
+    </div>
   </div>
 </div>
 <div id="scroll-progress"></div>
@@ -1370,17 +1517,17 @@ try {
 
 
 // ============================================================
-// 3D FLOATING MATERIALS - MOUSE FOLLOW & PARALLAX
+// NOOMO-STYLE 3D MATERIALS - ADVANCED INTERACTIONS
 // ============================================================
 try {
-  const materials = document.querySelectorAll('.material');
-  let mouseX = 0;
-  let mouseY = 0;
+  const materials = document.querySelectorAll('.object-3d');
+  let mouseX = window.innerWidth / 2;
+  let mouseY = window.innerHeight / 2;
   let scrollY = 0;
   
   document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX / window.innerWidth;
-    mouseY = e.clientY / window.innerHeight;
+    mouseX = e.clientX;
+    mouseY = e.clientY;
     updateMaterials();
   });
   
@@ -1391,14 +1538,23 @@ try {
   
   function updateMaterials() {
     materials.forEach((material, index) => {
-      const depth = (index + 1) * 0.08;
-      const moveX = (mouseX - 0.5) * 80 * depth;
-      const moveY = (mouseY - 0.5) * 80 * depth + (scrollY * depth * 0.1);
-      const rotation = (mouseX * 360) * 0.2;
+      const rect = material.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
       
-      material.style.transform = `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px)) rotateZ(${rotation}deg)`;
+      const distX = (mouseX - centerX) / 100;
+      const distY = (mouseY - centerY) / 100;
+      
+      const rotateX = Math.max(-30, Math.min(30, distY));
+      const rotateY = Math.max(-30, Math.min(30, distX));
+      const rotateZ = (scrollY * 0.1) + (index * 45);
+      
+      material.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg)`;
     });
   }
+  
+  // Initial update
+  updateMaterials();
 } catch (e) {
   console.warn('3D materials failed:', e);
 }
