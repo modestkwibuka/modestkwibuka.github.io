@@ -823,6 +823,21 @@ section{opacity:var(--section-opacity, 1);transform:translateY(var(--section-off
             0 20px 40px rgba(0, 0, 0, 0.15),
             0 30px 60px rgba(0, 0, 0, 0.2);
     }
+
+    /* Service Card Click Fix */
+    .service-card {
+        cursor: pointer !important;
+        pointer-events: auto !important;
+    }
+    
+    .service-card:hover {
+        transform: translateY(-8px);
+    }
+    
+    /* Ensure modal is on top */
+    #bookingModal {
+        z-index: 9999 !important;
+    }
 </style>
 <script src="https://cdn.jsdelivr.net/gh/darkroomengineering/lenis@latest"></script>
 </head>
@@ -1296,17 +1311,67 @@ section{opacity:var(--section-opacity, 1);transform:translateY(var(--section-off
 
 <script>
 // BOOKING MODAL
+
+// BOOKING MODAL FUNCTION - FIXED
 function openBookingModal(title, desc, price, includes, waMsg) {
-  document.getElementById('bm-title').textContent = title;
-  document.getElementById('bm-desc').textContent = desc;
-  document.getElementById('bm-price').textContent = price;
-  document.getElementById('bm-includes').textContent = includes;
-  var encoded = encodeURIComponent(waMsg);
-  document.getElementById('bm-wa-btn').href = 'https://wa.me/250788733916?text=' + encoded;
   var modal = document.getElementById('bookingModal');
+  if (!modal) {
+    console.error('Booking modal not found!');
+    return;
+  }
+  
+  // Set all the modal content
+  var titleEl = document.getElementById('bm-title');
+  var descEl = document.getElementById('bm-desc');
+  var priceEl = document.getElementById('bm-price');
+  var includesEl = document.getElementById('bm-includes');
+  var waBtn = document.getElementById('bm-wa-btn');
+  
+  if (titleEl) titleEl.textContent = title;
+  if (descEl) descEl.textContent = desc;
+  if (priceEl) priceEl.textContent = price;
+  if (includesEl) includesEl.textContent = includes;
+  
+  if (waBtn) {
+    var encoded = encodeURIComponent(waMsg);
+    waBtn.href = 'https://wa.me/250788733916?text=' + encoded;
+  }
+  
+  // Show the modal
   modal.style.display = 'flex';
   document.body.style.overflow = 'hidden';
+  
+  console.log('Modal opened for:', title);
 }
+
+function closeBookingModal() {
+  var modal = document.getElementById('bookingModal');
+  if (modal) {
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+}
+
+// Ensure modal close on backdrop click
+document.addEventListener('DOMContentLoaded', function() {
+  var modal = document.getElementById('bookingModal');
+  if (modal) {
+    modal.addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeBookingModal();
+      }
+    });
+  }
+  
+  // Close on Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeBookingModal();
+    }
+  });
+});
+
+
 function closeBookingModal() {
   document.getElementById('bookingModal').style.display = 'none';
   document.body.style.overflow = '';
