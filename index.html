@@ -193,13 +193,7 @@ section{padding:5rem 2rem;}
 
 /* SERVICES */
 .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;}
-.service-card{background:var(--dark2);border:1px solid rgba(195,216,9,0.1);border-radius:16px;padding:2rem;transition:all 0.3s;position:relative;overflow:hidden;}
-.service-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--lime);transform:scaleX(0);transition:transform 0.3s;}
-.service-card:hover{border-color:var(--lime);transform:translateY(-5px);}
-.service-card:hover::before{transform:scaleX(1);}
-.service-icon{font-size:2.5rem;margin-bottom:1rem;}
-.service-card h3{color:var(--lime);font-weight:700;margin-bottom:0.8rem;}
-.service-card p{color:#aaa;font-size:0.9rem;line-height:1.6;margin-bottom:1.2rem;}
+
 .service-price{color:var(--lime);font-weight:800;font-size:1.1rem;}
 .service-price span{color:#aaa;font-size:0.8rem;font-weight:400;}
 .service-cta{display:inline-flex;align-items:center;gap:6px;color:var(--dark);background:var(--lime);padding:0.5rem 1.2rem;border-radius:20px;font-weight:700;font-size:0.85rem;text-decoration:none;margin-top:1rem;transition:all 0.3s;}
@@ -299,12 +293,9 @@ footer p{color:var(--muted);font-size:0.85rem;}
 #bookingModal.open{display:flex!important;}
 .service-card:hover .service-cta{background:#d4ea0a;}
 /* SERVICE CARD BADGES & HIGHLIGHTS */
-.service-card{transition:all 0.3s ease;}
-.service-card:hover{box-shadow:0 8px 30px rgba(195,216,9,0.2);}
+
 /* SERVICE CARD 3D TILT */
-.service-card-3d{perspective:1200px;transform-style:preserve-3d;transition:all 0.3s ease;}
-.service-card-3d:hover{transform:perspective(1200px) rotateX(3deg) rotateY(-3deg) translateZ(10px) scale(1.01);box-shadow:0 15px 35px rgba(195,216,9,0.2)!important;transition:all 0.5s cubic-bezier(0.23,1,0.32,1);}
-@media(max-width:768px){.service-card-3d:hover{transform:translateY(-8px);}}
+
 
 
 .service-card[style*="Most Popular"]:hover{transform:translateY(-8px);box-shadow:0 12px 40px rgba(195,216,9,0.3);}
@@ -837,6 +828,202 @@ section{opacity:var(--section-opacity, 1);transform:translateY(var(--section-off
     /* Ensure modal is on top */
     #bookingModal {
         z-index: 9999 !important;
+    }
+
+    /* PREMIUM SERVICE CARD ENHANCEMENTS */
+    
+    /* Base Glassmorphic Service Card */
+    .service-card {
+        background: linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.1) 0%,
+            rgba(195, 216, 9, 0.05) 100%),
+            rgba(42, 40, 42, 0.8);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1.5px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        padding: 2rem;
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        position: relative;
+        overflow: hidden;
+        box-shadow: 
+            0 8px 32px rgba(0, 0, 0, 0.1),
+            inset 0 1px 1px rgba(255, 255, 255, 0.3),
+            inset 0 -1px 1px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Glow Effect Pseudo-element */
+    .service-card::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at center, 
+            rgba(195, 216, 9, 0.15), 
+            transparent 70%);
+        opacity: 0;
+        transition: opacity 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        border-radius: 20px;
+        pointer-events: none;
+    }
+    
+    .service-card:hover::after {
+        opacity: 1;
+    }
+    
+    /* Top Border Animation */
+    .service-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, var(--lime), transparent);
+        transform: scaleX(0);
+        transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        z-index: 10;
+    }
+    
+    .service-card:hover::before {
+        transform: scaleX(1);
+    }
+    
+    /* Enhanced Hover State */
+    .service-card:hover {
+        border-color: rgba(195, 216, 9, 0.4);
+        box-shadow: 
+            0 5px 15px rgba(0, 0, 0, 0.1),
+            0 15px 35px rgba(195, 216, 9, 0.15),
+            0 25px 60px rgba(195, 216, 9, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
+    
+    /* Service Icon Animation */
+    .service-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        display: inline-block;
+    }
+    
+    .service-card:hover .service-icon {
+        transform: scale(1.15) rotate(8deg);
+        filter: drop-shadow(0 10px 25px rgba(195, 216, 9, 0.4));
+    }
+    
+    /* Service Title */
+    .service-card h3 {
+        color: var(--lime);
+        font-weight: 700;
+        margin-bottom: 0.8rem;
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    .service-card:hover h3 {
+        text-shadow: 0 0 20px rgba(195, 216, 9, 0.5);
+    }
+    
+    /* Service Description */
+    .service-card p {
+        color: #aaa;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        margin-bottom: 1.2rem;
+        transition: color 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    .service-card:hover p {
+        color: #ccc;
+    }
+    
+    /* Service Price */
+    .service-price {
+        color: var(--lime);
+        font-weight: 800;
+        font-size: 1.1rem;
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    .service-card:hover .service-price {
+        font-size: 1.2rem;
+        text-shadow: 0 0 15px rgba(195, 216, 9, 0.4);
+    }
+    
+    /* Service CTA Button */
+    .service-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: var(--dark);
+        background: var(--lime);
+        padding: 0.6rem 1.4rem;
+        border-radius: 25px;
+        font-weight: 700;
+        font-size: 0.85rem;
+        text-decoration: none;
+        margin-top: 1rem;
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        box-shadow: 0 5px 15px rgba(195, 216, 9, 0.3);
+    }
+    
+    .service-card:hover .service-cta {
+        background: #d4ea0a;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(195, 216, 9, 0.5);
+    }
+    
+    .service-card:hover .service-cta:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 35px rgba(195, 216, 9, 0.6);
+    }
+    
+    /* Enhanced 3D Tilt for Desktop */
+    .service-card-3d {
+        perspective: 1500px;
+        transform-style: preserve-3d;
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    .service-card-3d:hover {
+        transform: perspective(1500px) 
+                   rotateX(6deg) 
+                   rotateY(-6deg) 
+                   translateZ(25px) 
+                   scale(1.03);
+    }
+    
+    /* Mobile Responsiveness */
+    @media(max-width: 768px) {
+        .service-card {
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+        
+        .service-card-3d:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+        
+        .service-card:hover .service-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+    }
+    
+    /* Most Popular Card Highlight */
+    .service-card[style*="Most Popular"] {
+        border-color: rgba(195, 216, 9, 0.3);
+        box-shadow: 
+            0 8px 32px rgba(0, 0, 0, 0.1),
+            0 0 30px rgba(195, 216, 9, 0.2),
+            inset 0 1px 1px rgba(255, 255, 255, 0.3);
+    }
+    
+    .service-card[style*="Most Popular"]:hover {
+        box-shadow: 
+            0 5px 15px rgba(0, 0, 0, 0.1),
+            0 15px 35px rgba(195, 216, 9, 0.25),
+            0 25px 60px rgba(195, 216, 9, 0.15),
+            0 0 40px rgba(195, 216, 9, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.4);
     }
 </style>
 <script src="https://cdn.jsdelivr.net/gh/darkroomengineering/lenis@latest"></script>
