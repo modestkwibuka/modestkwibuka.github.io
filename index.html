@@ -85,13 +85,13 @@ nav{position:fixed;top:0;width:100%;z-index:1000;padding:1rem 2rem;display:flex;
   width:120%;
   height:120%;
   object-fit:cover;
-  filter:blur(8px) brightness(0.4);
+  filter:blur(2px) brightness(0.6);
   z-index:1;
 }
 .hero-bg-overlay{
   position:absolute;
   inset:0;
-  background:radial-gradient(ellipse at center,rgba(34,32,34,0.3) 0%,rgba(34,32,34,0.7) 100%);
+  background:radial-gradient(ellipse at center,rgba(34,32,34,0.1) 0%,rgba(34,32,34,0.4) 100%);
   z-index:2;
 }
 .hero .container{
@@ -116,7 +116,15 @@ nav{position:fixed;top:0;width:100%;z-index:1000;padding:1rem 2rem;display:flex;
 .stat{text-align:center;}
 .stat-num{font-size:1.8rem;font-weight:800;color:var(--lime);font-family:'Space Grotesk',sans-serif;}
 .stat-label{font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;}
-.hero-image{position:relative;perspective:1200px;}
+.hero-image{
+  position:relative;
+  perspective:1200px;
+  transform-style:preserve-3d;
+}
+.hero-image img{
+  transition:all 0.3s ease;
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
 .hero-img-wrap{position:relative;border-radius:20px;overflow:hidden;}
 .hero-img-wrap img{width:100%;height:500px;object-fit:cover;object-position:top;display:block;}
 .hero-img-wrap::before{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 60%,var(--dark));z-index:1;}
@@ -275,7 +283,7 @@ footer p{color:var(--muted);font-size:0.85rem;}
 .service-card:hover{box-shadow:0 8px 30px rgba(195,216,9,0.2);}
 /* SERVICE CARD 3D TILT */
 .service-card-3d{perspective:1200px;transform-style:preserve-3d;transition:all 0.3s ease;}
-.service-card-3d:hover{transform:rotateX(8deg) rotateY(-8deg) translateZ(20px);box-shadow:0 20px 50px rgba(195,216,9,0.3)!important;}
+.service-card-3d:hover{transform:perspective(1200px) rotateX(10deg) rotateY(-10deg) translateZ(30px) scale(1.02);box-shadow:0 30px 60px rgba(195,216,9,0.4)!important;}
 @media(max-width:768px){.service-card-3d:hover{transform:translateY(-8px);}}
 
 
@@ -290,8 +298,8 @@ footer p{color:var(--muted);font-size:0.85rem;}
 
 /* HERO VIDEO BACKGROUND */
 .hero{position:relative;overflow:hidden;}
-.hero-bg-video{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:120%;height:120%;object-fit:cover;filter:blur(8px) brightness(0.4);z-index:1;}
-.hero-bg-overlay{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(34,32,34,0.3) 0%,rgba(34,32,34,0.7) 100%);z-index:2;}
+.hero-bg-video{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:120%;height:120%;object-fit:cover;filter:blur(2px) brightness(0.6);z-index:1;}
+.hero-bg-overlay{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(34,32,34,0.1) 0%,rgba(34,32,34,0.4) 100%);z-index:2;}
 .hero .container{position:relative;z-index:3;}
 
 /* GLASSMORPHIC CARD */
@@ -303,10 +311,10 @@ footer p{color:var(--muted);font-size:0.85rem;}
 .profile-photo.tilted{transition:transform 0.1s ease-out;}
 
 /* GALLERY GRID */
-.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;grid-auto-rows:280px;}
-.gallery-item{position:relative;border-radius:15px;overflow:hidden;cursor:pointer;background:linear-gradient(135deg,rgba(195,216,9,0.1),rgba(195,216,9,0.05));border:1px solid rgba(195,216,9,0.2);transition:all 0.4s cubic-bezier(0.23,1,0.320,1);transform-style:preserve-3d;perspective:1000px;}
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;grid-auto-rows:280px;width:100%;}
+.gallery-item{position:relative;border-radius:15px;overflow:hidden;cursor:pointer;background:linear-gradient(135deg,rgba(195,216,9,0.1),rgba(195,216,9,0.05));border:1px solid rgba(195,216,9,0.3);transition:all 0.4s cubic-bezier(0.23,1,0.320,1);transform-style:preserve-3d;perspective:1000px;box-shadow:0 4px 15px rgba(0,0,0,0.3);}
 .gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform 0.4s ease;filter:brightness(0.8);}
-.gallery-item:hover{transform:translateY(-12px) rotateX(5deg);box-shadow:0 20px 40px rgba(195,216,9,0.25);border-color:rgba(195,216,9,0.5);}
+.gallery-item:hover{transform:translateY(-15px) rotateX(8deg) rotateZ(2deg) scale(1.05);box-shadow:0 25px 50px rgba(195,216,9,0.35);border-color:var(--lime);}
 .gallery-item:hover img{transform:scale(1.08);filter:brightness(1);}
 .gallery-item-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(195,216,9,0.2),rgba(195,216,9,0.05));display:flex;align-items:flex-end;padding:1.5rem;opacity:0;transition:opacity 0.3s;}
 .gallery-item:hover .gallery-item-overlay{opacity:1;}
@@ -905,25 +913,28 @@ if (profileTilt) {
     const y = e.clientY - rect.top;
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    const rotateX = (y - centerY) / 10;
-    const rotateY = (centerX - x) / 10;
-    img.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+    const rotateX = (y - centerY) / 8;
+    const rotateY = (centerX - x) / 8;
+    const scale = 1.08;
+    img.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${scale})`;
+    img.style.boxShadow = '0 20px 40px rgba(195,216,9,0.3)';
   });
   profileTilt.addEventListener('mouseleave', function() {
-    img.style.transform = 'rotateX(0) rotateY(0) scale(1)';
+    img.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+    img.style.boxShadow = '0 10px 30px rgba(0,0,0,0.2)';
   });
 }
 
 // PROFESSIONAL GALLERY
 const galleryItems = [
-  {id:1, category:'content', title:'Brand Campaign', img:'https://via.placeholder.com/400x400?text=Brand+Campaign'},
-  {id:2, category:'wedding', title:'Wedding Day', img:'https://via.placeholder.com/400x400?text=Wedding'},
-  {id:3, category:'content', title:'Social Content', img:'https://via.placeholder.com/400x400?text=Social+Content'},
-  {id:4, category:'events', title:'Event Coverage', img:'https://via.placeholder.com/400x400?text=Event'},
-  {id:5, category:'wedding', title:'Reception', img:'https://via.placeholder.com/400x400?text=Reception'},
-  {id:6, category:'content', title:'Product Shoot', img:'https://via.placeholder.com/400x400?text=Product'},
-  {id:7, category:'events', title:'Conference', img:'https://via.placeholder.com/400x400?text=Conference'},
-  {id:8, category:'wedding', title:'Ceremony', img:'https://via.placeholder.com/400x400?text=Ceremony'},
+  {id:1, category:'content', title:'Brand Campaign', img:'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=400&fit=crop'},
+  {id:2, category:'wedding', title:'Wedding Day', img:'https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=400&fit=crop'},
+  {id:3, category:'content', title:'Social Content', img:'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400&h=400&fit=crop'},
+  {id:4, category:'events', title:'Event Coverage', img:'https://images.unsplash.com/photo-1540575467063-178f50002cbc?w=400&h=400&fit=crop'},
+  {id:5, category:'wedding', title:'Reception', img:'https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=400&h=400&fit=crop'},
+  {id:6, category:'content', title:'Product Shoot', img:'https://images.unsplash.com/photo-1552668288-648666c8ae08?w=400&h=400&fit=crop'},
+  {id:7, category:'events', title:'Conference', img:'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=400&fit=crop'},
+  {id:8, category:'wedding', title:'Ceremony', img:'https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=400&fit=crop'},
 ];
 
 function renderGallery(filter='all') {
