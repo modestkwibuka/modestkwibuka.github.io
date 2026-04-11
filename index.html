@@ -1034,6 +1034,119 @@ section{opacity:var(--section-opacity, 1);transform:translateY(var(--section-off
     .service-card p {
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     }
+
+    /* Desktop View Optimizations */
+    @media (min-width: 1024px) {
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hero-content {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+        
+        .services-grid {
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            padding: 60px 40px;
+        }
+        
+        .service-card {
+            min-height: 400px;
+        }
+        
+        .gallery-grid {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+    }
+    
+    @media (min-width: 1440px) {
+        .hero-content {
+            max-width: 1400px;
+            padding: 0 60px;
+        }
+        
+        .services-grid {
+            padding: 80px 60px;
+        }
+        
+        .gallery-grid {
+            grid-template-columns: repeat(5, 1fr);
+        }
+    }
+
+    /* Content Creation Section */
+    .content-creation-section {
+        padding: 80px 20px;
+        background: linear-gradient(135deg, rgba(195, 216, 9, 0.05) 0%, rgba(42, 40, 42, 0.6) 100%);
+        min-height: 600px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .content-creation-container {
+        max-width: 1000px;
+        width: 100%;
+        margin: 0 auto;
+    }
+    
+    .content-creation-section h2 {
+        font-size: 2.5rem;
+        color: #c3d809;
+        margin-bottom: 40px;
+        text-align: center;
+        text-shadow: 0 2px 8px rgba(195, 216, 9, 0.3);
+    }
+    
+    .content-video-wrapper {
+        position: relative;
+        width: 100%;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        border-radius: 20px;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(10px);
+        border: 1.5px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 20px 60px rgba(195, 216, 9, 0.2);
+    }
+    
+    .content-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 20px;
+    }
+    
+    .video-description {
+        text-align: center;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 1.1rem;
+        margin-top: 30px;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    }
+    
+    @media (min-width: 1024px) {
+        .content-creation-section {
+            padding: 120px 40px;
+            min-height: 700px;
+        }
+        
+        .content-creation-section h2 {
+            font-size: 3rem;
+            margin-bottom: 50px;
+        }
+    }
 </style>
 <script src="https://cdn.jsdelivr.net/gh/darkroomengineering/lenis@latest"></script>
 </head>
@@ -1360,6 +1473,27 @@ section{opacity:var(--section-opacity, 1);transform:translateY(var(--section-off
       </div>
 </div>
 </section>
+    <!-- Content Creation Video Section -->
+    <section id="content-creation" class="content-creation-section fade-up">
+        <div class="content-creation-container">
+            <h2>Content Creation in Action</h2>
+            <div class="content-video-wrapper">
+                <video 
+                    class="content-video" 
+                    width="100%" 
+                    height="auto" 
+                    controls 
+                    poster="content-creation.mov"
+                    playsinline
+                >
+                    <source src="content-creation.mov" type="video/quicktime">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <p class="video-description">Watch how we bring your vision to life through professional content creation.</p>
+        </div>
+    </section>
+
 
 <!-- SKILLS -->
 <section id="skills" style="background:var(--dark2);">
